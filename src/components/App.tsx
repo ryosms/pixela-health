@@ -5,6 +5,7 @@ import Header from "./Header";
 import WeightForm from "./WeightForm";
 import firebase from "../config/firebase-settings";
 import "firebase/auth";
+import Login from "./Login";
 
 function App() {
   const [completeLoginCheck, completed] = useState(false);
@@ -17,24 +18,25 @@ function App() {
     })
   }, []);
 
-  if (!completeLoginCheck) {
-    return (
-      <React.Fragment>
-        <CssBaseline/>
-        <Header user={loginUser}/>
-      </React.Fragment>
-    );
-  }
-
   return (
     <React.Fragment>
       <CssBaseline/>
       <Header user={loginUser}/>
       <Container>
-        <WeightForm user={loginUser}/>
+        {selectDisplayComponent(completeLoginCheck, loginUser)}
       </Container>
     </React.Fragment>
   );
 }
 
 export default App;
+
+function selectDisplayComponent(checkCompleted: boolean, user: any): JSX.Element {
+  if (!checkCompleted) {
+    return <React.Fragment/>
+  }
+  if (!user) {
+    return <Login/>
+  }
+  return <WeightForm/>
+}

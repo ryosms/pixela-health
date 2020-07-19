@@ -1,15 +1,8 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import 'firebase/auth';
-import Login from './Login';
 
-export default function WeightForm(props: any) {
-  const loginUser = props.user;
-
-  if (!loginUser) {
-    return <Login/>
-  }
-
+export default function WeightForm() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
