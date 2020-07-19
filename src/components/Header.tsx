@@ -1,23 +1,64 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Button from "@material-ui/core/Button";
+import firebase from '../config/firebase-settings';
+import 'firebase/auth';
+
+const authStyles = makeStyles((_) => ({
+  avatar: {
+    margin: 10,
+  },
+}));
+
+function AuthButton() {
+  const classes = authStyles();
+  const [user, setUser] = useState({isLogin: false, name: '', iconUrl: ''});
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (!!user) {
+        setUser({isLogin: true, name: `${user.displayName}`, iconUrl: `${user.photoURL}`});
+      } else {
+        setUser({isLogin: false, name: '', iconUrl: ''});
+      }
+    });
+    console.log("effect!");
+  }, []);
+
+  const logout = useCallback(() => {
+    firebase.auth().signOut().catch(err => console.error(err));
+  }, []);
+
+  if (!user.isLogin) {
+    return <React.Fragment/>
+  }
+
+  return (
+    <React.Fragment>
+      <Button color="inherit">
+        <Avatar alt="profile image" src={user.iconUrl}
+                className={classes.avatar} title={user.name}/>
+      </Button>
+      <Button color="inherit" onClick={logout}>
+        Logout
+      </Button>
+    </React.Fragment>
+  );
+}
 
 function Header() {
-  const classes = makeStyles((theme) => ({
+  const classes = makeStyles((_) => ({
     appBar: {
-      position: 'absolute',
+      position: 'relative',
     },
     title: {
       flexGrow: 1
     }
   }))();
-
-  const googleLogin = useCallback(() => {
-    alert("login")
-  }, []);
 
   return (
     <React.Fragment>
@@ -26,9 +67,7 @@ function Header() {
           <Typography variant="h6" color="inherit" noWrap className={classes.title}>
             Pixela Health
           </Typography>
-          <Button color="inherit" onClick={googleLogin}>
-            Login with Google
-          </Button>
+          <AuthButton/>
         </Toolbar>
       </AppBar>
     </React.Fragment>
