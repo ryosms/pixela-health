@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback} from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import firebase from '../config/firebase-settings';
 import 'firebase/auth';
+import {User} from 'firebase';
 
 const authStyles = makeStyles((_) => ({
   avatar: {
@@ -14,33 +15,24 @@ const authStyles = makeStyles((_) => ({
   },
 }));
 
-function AuthButton() {
+function AuthButton(props: any) {
+  const user: User | null = props.user;
   const classes = authStyles();
-  const [user, setUser] = useState({isLogin: false, name: '', iconUrl: ''});
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      if (!!user) {
-        setUser({isLogin: true, name: `${user.displayName}`, iconUrl: `${user.photoURL}`});
-      } else {
-        setUser({isLogin: false, name: '', iconUrl: ''});
-      }
-    });
-  }, []);
 
   const logout = useCallback(() => {
     firebase.auth().signOut().catch(err => console.error(err));
   }, []);
 
-  if (!user.isLogin) {
+  if (!user) {
     return <React.Fragment/>
   }
-
+  const url = `${user.photoURL}`;
+  const name = `${user.displayName}`;
   return (
     <React.Fragment>
       <Button color="inherit">
-        <Avatar alt="profile image" src={user.iconUrl}
-                className={classes.avatar} title={user.name}/>
+        <Avatar alt="profile image" src={url}
+                className={classes.avatar} title={name}/>
       </Button>
       <Button color="inherit" onClick={logout}>
         Logout
@@ -49,7 +41,7 @@ function AuthButton() {
   );
 }
 
-function Header() {
+function Header(props: any) {
   const classes = makeStyles((_) => ({
     appBar: {
       position: 'relative',
@@ -66,7 +58,7 @@ function Header() {
           <Typography variant="h6" color="inherit" noWrap className={classes.title}>
             Pixela Health
           </Typography>
-          <AuthButton/>
+          <AuthButton user={props.user}/>
         </Toolbar>
       </AppBar>
     </React.Fragment>
