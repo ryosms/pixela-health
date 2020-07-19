@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "./Header";
-import Login from "./Login";
+import WeightForm from "./WeightForm";
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <CssBaseline/>
       <Header/>
       <Container>
-        <Login/>
+        <WeightForm/>
       </Container>
     </React.Fragment>
   );

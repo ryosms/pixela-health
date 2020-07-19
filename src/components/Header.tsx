@@ -26,7 +26,6 @@ function AuthButton() {
         setUser({isLogin: false, name: '', iconUrl: ''});
       }
     });
-    console.log("effect!");
   }, []);
 
   const logout = useCallback(() => {
