@@ -1,9 +1,11 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import firebase from '../config/firebase-settings';
 import 'firebase/auth';
@@ -19,6 +21,16 @@ function AuthButton(props: any) {
   const user: User | null = props.user;
   const classes = authStyles();
 
+  const [menuTrigger, setMenuTrigger] = useState<null | HTMLElement>(null);
+
+  const menuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMenuTrigger(event.currentTarget);
+  };
+
+  const menuClose = () => {
+    setMenuTrigger(null);
+  }
+
   const logout = useCallback(() => {
     firebase.auth().signOut().catch(err => console.error(err));
   }, []);
@@ -30,13 +42,12 @@ function AuthButton(props: any) {
   const name = `${user.displayName}`;
   return (
     <React.Fragment>
-      <Button color="inherit">
-        <Avatar alt="profile image" src={url}
-                className={classes.avatar} title={name}/>
+      <Button color="inherit" aria-controls="logout-menu" aria-haspopup="true" onClick={menuOpen}>
+        <Avatar alt="profile image" src={url} className={classes.avatar} title={name}/>
       </Button>
-      <Button color="inherit" onClick={logout}>
-        Logout
-      </Button>
+      <Menu id="logout-menu" anchorEl={menuTrigger} keepMounted open={Boolean(menuTrigger)} onClose={menuClose}>
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </Menu>
     </React.Fragment>
   );
 }
