@@ -20,6 +20,7 @@ export default function JapaneseDatePicker(props: any) {
     <React.Fragment>
       <MuiPickersUtilsProvider utils={JapaneseDateFnsUtils} locale={jaLocale}>
         <DatePicker
+          required={props.required}
           id={props.id}
           label={props.label}
           format="yyyy/MM/dd"
