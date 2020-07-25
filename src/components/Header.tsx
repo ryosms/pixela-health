@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import firebase from '../config/firebase-settings';
+import firebase from '../libs/firebase-settings';
 import 'firebase/auth';
 import {User} from 'firebase';
 
