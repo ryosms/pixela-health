@@ -1,42 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "./Header";
 import WeightForm from "./WeightForm";
-import firebase from "../config/firebase-settings";
-import "firebase/auth";
 import Login from "./Login";
+import AuthCheck from "./AuthCheck";
 
 function App() {
-  const [completeLoginCheck, completed] = useState(false);
-  const [loginUser, setUser] = useState(firebase.auth().currentUser);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      setUser(user);
-      completed(true);
-    })
-  }, []);
-
   return (
     <React.Fragment>
       <CssBaseline/>
-      <Header user={loginUser}/>
+      <Header/>
       <Container>
-        {selectDisplayComponent(completeLoginCheck, loginUser)}
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/login" component={Login}/>
+            <AuthCheck>
+              <Switch>
+                <Route exact path="/" component={WeightForm}/>
+              </Switch>
+            </AuthCheck>
+          </Switch>
+        </BrowserRouter>
       </Container>
     </React.Fragment>
   );
 }
 
 export default App;
-
-function selectDisplayComponent(checkCompleted: boolean, user: any): JSX.Element {
-  if (!checkCompleted) {
-    return <React.Fragment/>
-  }
-  if (!user) {
-    return <Login/>
-  }
-  return <WeightForm/>
-}

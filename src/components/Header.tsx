@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -52,7 +52,14 @@ function AuthButton(props: any) {
   );
 }
 
-function Header(props: any) {
+function Header() {
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      setUser(user);
+    })
+  });
+
   const classes = makeStyles((_) => ({
     appBar: {
       position: 'relative',
@@ -69,7 +76,7 @@ function Header(props: any) {
           <Typography variant="h6" color="inherit" noWrap className={classes.title}>
             Pixela Health
           </Typography>
-          <AuthButton user={props.user}/>
+          <AuthButton user={user}/>
         </Toolbar>
       </AppBar>
     </React.Fragment>
