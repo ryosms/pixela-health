@@ -2,10 +2,10 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import Header from "./Header";
-import WeightForm from "./WeightForm";
-import Login from "./Login";
-import AuthCheck from "./AuthCheck";
+import Header from "src/components/Header";
+import WeightForm from "src/components/WeightForm";
+import Login from "src/components/Login";
+import AuthCheck from "src/components/AuthCheck";
 
 function App() {
   return (

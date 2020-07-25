@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Redirect} from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import firebase from "../libs/firebase-settings";
+import firebase from "src/libs/firebase-settings";
 import "firebase/auth";
 
 export default function AuthCheck(props: any) {

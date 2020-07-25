@@ -8,7 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import JapaneseDatePicker from "./JapaneseDatePicker";
+import JapaneseDatePicker from "src/components/JapaneseDatePicker";
 
 const styles = makeStyles((_) => ({
   formCard: {
