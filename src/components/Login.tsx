@@ -4,7 +4,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import firebase from "../config/firebase-settings";
 import 'firebase/auth';
 
-function Login() {
+function Login(props: any) {
   const classes = makeStyles((_) => ({
     container: {
       marginTop: 30,
@@ -14,8 +14,9 @@ function Login() {
 
   const login = useCallback(() => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider).catch(err => console.error(err));
-  }, []);
+    firebase.auth().signInWithPopup(provider)
+      .then(_ => props.history.push("/"));
+  }, [props.history]);
 
   return (
     <React.Fragment>

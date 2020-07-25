@@ -32,6 +32,7 @@ function AuthButton(props: any) {
   }
 
   const logout = useCallback(() => {
+    menuClose();
     firebase.auth().signOut().catch(err => console.error(err));
   }, []);
 
