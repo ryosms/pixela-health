@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import JapaneseDatePicker from "src/components/JapaneseDatePicker";
 
 const styles = makeStyles((_) => ({
@@ -17,15 +16,13 @@ const styles = makeStyles((_) => ({
 }));
 
 export default function WeightForm() {
-  const classes = styles();
-
   const [scaledDate, setScaledDate] = React.useState<Date | null>(
     new Date(),
   );
 
   return (
     <React.Fragment>
-      <Card className={classes.formCard}>
+      <Card>
         <CardHeader title={"体重入力"}/>
         <CardContent>
           <Grid container spacing={3}>

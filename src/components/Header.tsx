@@ -64,6 +64,7 @@ function Header() {
   const classes = makeStyles((_) => ({
     appBar: {
       position: 'relative',
+      marginBottom: 10,
     },
     title: {
       flexGrow: 1
