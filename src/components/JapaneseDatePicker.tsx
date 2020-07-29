@@ -27,6 +27,7 @@ export default function JapaneseDatePicker(props: any) {
           value={props.value}
           onChange={props.onChange}
           fullWidth
+          disabled={props.disabled}
         />
       </MuiPickersUtilsProvider>
     </React.Fragment>
