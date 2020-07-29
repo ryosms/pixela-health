@@ -9,12 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import JapaneseDatePicker from "src/components/JapaneseDatePicker";
 
-const styles = makeStyles((_) => ({
-  formCard: {
-    marginTop: "10px"
-  }
-}));
-
 export default function WeightForm() {
   const [scaledDate, setScaledDate] = React.useState<Date | null>(
     new Date(),
