@@ -1,22 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Redirect} from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import firebase from "src/libs/firebase-settings";
 import "firebase/auth";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 export default function AuthCheck(props: any) {
-  const [isChecked, setChecked] = useState(false);
-  const [signedIn, setSignedIn] = useState(false);
+  const [user, loading] = useAuthState(firebase.auth());
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      setSignedIn(!!user);
-      setChecked(true);
-    })
-  }, []);
-
-  if (!isChecked) {
+  if (loading) {
     return (
       <React.Fragment>
         <Backdrop open={true}>
@@ -25,7 +18,7 @@ export default function AuthCheck(props: any) {
       </React.Fragment>
     )
   }
-  if (signedIn) {
+  if (!!user) {
     return props.children;
   }
   return <Redirect to="/login"/>

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
@@ -10,6 +10,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import firebase from 'src/libs/firebase-settings';
 import 'firebase/auth';
 import {User} from 'firebase';
+import {useAuthState} from "react-firebase-hooks/auth";
 
 const authStyles = makeStyles((_) => ({
   avatar: {
@@ -54,12 +55,7 @@ function AuthButton(props: any) {
 }
 
 function Header() {
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      setUser(user);
-    })
-  });
+  const [user] = useAuthState(firebase.auth());
 
   const classes = makeStyles((_) => ({
     appBar: {
