@@ -9,7 +9,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import JapaneseDatePicker from "src/components/JapaneseDatePicker";
-import pixela, {ScaledWeight} from "src/libs/pixela";
+import {Pixela, ScaledWeight} from "src/libs/pixela";
 import Progress from "./Progress";
 
 const numberPattern = /^(\d+\.\d+)$|^\d+$/i
@@ -22,11 +22,18 @@ export default function WeightForm() {
     new Date(),
   );
 
+  const username = `${process.env['REACT_APP_PIXELA_USERNAME']}`;
+  const token = `${process.env['REACT_APP_PIXELA_TOKEN']}`;
+  const graphId = `${process.env['REACT_APP_PIXELA_GRAPH_ID']}`;
+  console.log(graphId);
+
   const onSubmit = (data: ScaledWeight) => {
     setProcessing(true);
     data.scaledDate = scaledDate;
-    console.log(data);
-    pixela.register().finally(() => setProcessing(false));
+    Pixela.create(username, token, graphId).register(data)
+      .then(result => console.log(result))
+      .catch(err => console.log(err))
+      .finally(() => setProcessing(false));
   }
 
   return (
