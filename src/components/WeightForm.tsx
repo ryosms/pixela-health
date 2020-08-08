@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import JapaneseDatePicker from "src/components/JapaneseDatePicker";
 import {Pixela, ScaledWeight} from "src/libs/pixela";
 import Progress from "./Progress";
+import MessageBox, {MessageBoxKind} from "./MessageBox";
 
 const numberPattern = /^(\d+\.\d+)$|^\d+$/i
 const integerPattern = /^\d+$/i
@@ -21,6 +22,8 @@ export default function WeightForm() {
   const [scaledDate, setScaledDate] = React.useState<Date | null>(
     new Date(),
   );
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageKind, setMessageKind] = useState<MessageBoxKind>("success")
 
   const username = `${process.env['REACT_APP_PIXELA_USERNAME']}`;
   const token = `${process.env['REACT_APP_PIXELA_TOKEN']}`;
@@ -31,13 +34,22 @@ export default function WeightForm() {
     setProcessing(true);
     data.scaledDate = scaledDate;
     Pixela.create(username, token, graphId).register(data)
-      .then(result => console.log(result))
-      .catch(err => console.log(err))
+      .then(_ => {
+        setMessage("Complete!");
+        setMessageKind("success");
+      })
+      .catch(_ => {
+        setMessage("Something went wrong");
+        setMessageKind("error")
+      })
       .finally(() => setProcessing(false));
   }
 
+  const closeMessageBox = () => setMessage(null);
+
   return (
     <React.Fragment>
+      <MessageBox message={message} handleClose={closeMessageBox} kind={messageKind}/>
       <Progress processing={processing}/>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
