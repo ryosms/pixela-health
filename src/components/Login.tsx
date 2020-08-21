@@ -21,8 +21,10 @@ function Login(props: any) {
   return (
     <React.Fragment>
       <div className={classes.container}>
-        <Button variant="contained" color="primary" onClick={login}>
-          Login with Google
+        <Button color="inherit" onClick={login}>
+          <img alt="Sign in with Google"
+               src={"/google_signin_btn.png"}
+               title="Sign in with Google"/>
         </Button>
       </div>
     </React.Fragment>
