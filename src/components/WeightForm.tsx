@@ -12,11 +12,19 @@ import JapaneseDatePicker from "src/components/JapaneseDatePicker";
 import {Pixela, ScaledWeight} from "src/libs/pixela";
 import Progress from "./Progress";
 import MessageBox, {MessageBoxKind} from "./MessageBox";
+import {useAuthState} from "react-firebase-hooks/auth";
+import firebase from "src/libs/firebase-settings";
 
 const numberPattern = /^(\d+\.\d+)$|^\d+$/i
 const integerPattern = /^\d+$/i
 
+function enable(user: firebase.User | undefined): boolean {
+  const enableEmail = `${process.env['REACT_APP_AVAILABLE_USER_EMAIL']}`;
+  return !enableEmail || user?.email === enableEmail;
+}
+
 export default function WeightForm() {
+  const [user, loading] = useAuthState(firebase.auth());
   const {register, errors, handleSubmit} = useForm<ScaledWeight>();
   const [processing, setProcessing] = useState(false);
   const [scaledDate, setScaledDate] = React.useState<Date | null>(
@@ -28,9 +36,10 @@ export default function WeightForm() {
   const username = `${process.env['REACT_APP_PIXELA_USERNAME']}`;
   const token = `${process.env['REACT_APP_PIXELA_TOKEN']}`;
   const graphId = `${process.env['REACT_APP_PIXELA_GRAPH_ID']}`;
-  console.log(graphId);
 
   const onSubmit = (data: ScaledWeight) => {
+    if (loading) return;
+    if (!enable(user)) return;
     setProcessing(true);
     data.scaledDate = scaledDate;
     Pixela.create(username, token, graphId).register(data)
@@ -143,7 +152,10 @@ export default function WeightForm() {
             </Grid>
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="primary" type="submit" disabled={processing}>登録</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit" disabled={processing || !enable(user)}>登録</Button>
           </CardActions>
         </Card>
       </form>
