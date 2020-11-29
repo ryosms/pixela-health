@@ -85,6 +85,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({required: true, pattern: numberPattern})}
                   error={!!errors.weight}
+                  inputProps={{ 'inputmode': 'decimal'}}
                 />
               </Grid>
             </Grid>
@@ -97,6 +98,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({pattern: numberPattern})}
                   error={!!errors.bodyFatPercentage}
+                  inputProps={{ 'inputmode': 'decimal'}}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -107,6 +109,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({pattern: numberPattern})}
                   error={!!errors.visceralFatLevel}
+                  inputProps={{ 'inputmode': 'numeric'}}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -117,6 +120,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({pattern: numberPattern})}
                   error={!!errors.skeletalMusclePercentage}
+                  inputProps={{ 'inputmode': 'decimal'}}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -127,6 +131,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({pattern: integerPattern})}
                   error={!!errors.physicalAge}
+                  inputProps={{ 'inputmode': 'numeric'}}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -137,6 +142,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({pattern: integerPattern})}
                   error={!!errors.basalMetabolism}
+                  inputProps={{ 'inputmode': 'numeric'}}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -147,6 +153,7 @@ export default function WeightForm() {
                   disabled={processing}
                   inputRef={register({pattern: numberPattern})}
                   error={!!errors.bmi}
+                  inputProps={{ 'inputmode': 'decimal'}}
                 />
               </Grid>
             </Grid>
