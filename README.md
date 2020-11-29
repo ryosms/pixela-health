@@ -1,3 +1,18 @@
+# pixela-health
+
+Record my weight to [pixe.la](https://pixe.la).
+
+## Deploy command
+
+```console
+$ npm run build
+$ firebase deploy
+or
+$ firebase deploy --only hosting
+```
+
+----
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
