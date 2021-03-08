@@ -11,7 +11,24 @@ or
 $ firebase deploy --only hosting
 ```
 
-----
+## Setup firebase project
+
+1. Create your Firebase project
+1. Create your Firestore database
+1. Setup Firebase Authentication
+    * Enable `Google` provider
+1. Get application settings
+    * Go to settings page on your Firebase project
+    * Add `Web` application
+    * Get settings
+    * Copy and rename `sample.env` to `.env`
+    * Set environment variables in `.env`
+1. build app
+    * `npm run build`
+1. deploy to firebase
+    * `firebase deploy`
+
+--- 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
