@@ -2,7 +2,8 @@ name: Qodana Scan
 on:
   pull_request:
   push:
-    - master
+    branches:
+      - master
 
 jobs:
   qodana:
