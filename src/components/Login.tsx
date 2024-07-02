@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import Button from '@material-ui/core/Button';
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import firebase from "src/libs/firebase-settings";
-import 'firebase/auth';
+import {auth} from "src/libs/firebase-settings";
+import {GoogleAuthProvider, signInWithPopup} from 'firebase/auth';
 
 function Login(props: any) {
   const classes = makeStyles((_) => ({
@@ -13,8 +13,8 @@ function Login(props: any) {
   }))();
 
   const login = useCallback(() => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
       .then(_ => props.history.push("/"));
   }, [props.history]);
 

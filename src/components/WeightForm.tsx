@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useForm} from "react-hook-form";
-import "firebase/auth";
+import {User} from "firebase/auth";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -13,19 +13,19 @@ import {Pixela, ScaledWeight} from "src/libs/pixela";
 import Progress from "./Progress";
 import MessageBox, {MessageBoxKind} from "./MessageBox";
 import {useAuthState} from "react-firebase-hooks/auth";
-import firebase from "src/libs/firebase-settings";
+import {auth} from "src/libs/firebase-settings";
 
 const numberPattern = /^(\d+\.\d+)$|^\d+$/i
 const integerPattern = /^\d+$/i
 
-function enable(user: firebase.User | undefined): boolean {
+function enable(user: User | null | undefined): boolean {
   const enableEmail = `${process.env['REACT_APP_AVAILABLE_USER_EMAIL']}`;
   return !enableEmail || user?.email === enableEmail;
 }
 
 export default function WeightForm() {
-  const [user, loading] = useAuthState(firebase.auth());
-  const {register, errors, handleSubmit} = useForm<ScaledWeight>();
+  const [user, loading] = useAuthState(auth);
+  const {register, handleSubmit, formState: {errors}} = useForm<ScaledWeight>();
   const [processing, setProcessing] = useState(false);
   const [scaledDate, setScaledDate] = React.useState<Date | null>(
     new Date(),
@@ -83,9 +83,8 @@ export default function WeightForm() {
                   label="体重 *"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({required: true, pattern: numberPattern})}
                   error={!!errors.weight}
-                  inputProps={{ 'inputmode': 'decimal'}}
+                  inputProps={{ inputmode: 'decimal', required: true, pattern: numberPattern}}
                 />
               </Grid>
             </Grid>
@@ -96,9 +95,8 @@ export default function WeightForm() {
                   label="体脂肪率"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({pattern: numberPattern})}
                   error={!!errors.bodyFatPercentage}
-                  inputProps={{ 'inputmode': 'decimal'}}
+                  inputProps={{ inputmode: 'decimal', pattern: numberPattern}}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -107,9 +105,8 @@ export default function WeightForm() {
                   label="内臓脂肪レベル"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({pattern: numberPattern})}
                   error={!!errors.visceralFatLevel}
-                  inputProps={{ 'inputmode': 'numeric'}}
+                  inputProps={{ inputmode: 'numeric', pattern: numberPattern }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -118,9 +115,8 @@ export default function WeightForm() {
                   label="骨格筋率"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({pattern: numberPattern})}
                   error={!!errors.skeletalMusclePercentage}
-                  inputProps={{ 'inputmode': 'decimal'}}
+                  inputProps={{ inputmode: 'decimal', pattern: numberPattern }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -129,9 +125,8 @@ export default function WeightForm() {
                   label="体年齢"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({pattern: integerPattern})}
                   error={!!errors.physicalAge}
-                  inputProps={{ 'inputmode': 'numeric'}}
+                  inputProps={{ inputmode: 'numeric', pattern: integerPattern }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -140,9 +135,8 @@ export default function WeightForm() {
                   label="基礎代謝"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({pattern: integerPattern})}
                   error={!!errors.basalMetabolism}
-                  inputProps={{ 'inputmode': 'numeric'}}
+                  inputProps={{ inputmode: 'numeric', pattern: integerPattern }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -151,9 +145,8 @@ export default function WeightForm() {
                   label="BMI"
                   fullWidth
                   disabled={processing}
-                  inputRef={register({pattern: numberPattern})}
                   error={!!errors.bmi}
-                  inputProps={{ 'inputmode': 'decimal'}}
+                  inputProps={{ inputmode: 'decimal', pattern: numberPattern }}
                 />
               </Grid>
             </Grid>

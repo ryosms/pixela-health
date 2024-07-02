@@ -1,13 +1,13 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import firebase from "src/libs/firebase-settings";
+import {auth} from "src/libs/firebase-settings";
 import "firebase/auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 
 export default function AuthCheck(props: any) {
-  const [user, loading] = useAuthState(firebase.auth());
+  const [user, loading] = useAuthState(auth);
 
   if (loading) {
     return (
@@ -21,5 +21,5 @@ export default function AuthCheck(props: any) {
   if (!!user) {
     return props.children;
   }
-  return <Redirect to="/login"/>
+  return <Navigate replace to="/login"/>
 }
