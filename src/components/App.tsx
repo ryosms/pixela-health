@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Header from "src/components/Header";
@@ -14,14 +14,14 @@ function App() {
       <Header/>
       <Container>
         <BrowserRouter>
-          <Switch>
-            <Route exact path="/login" component={Login}/>
+          <Routes>
+            <Route path="/login" element={<Login />}/>
             <AuthCheck>
-              <Switch>
-                <Route exact path="/" component={WeightForm}/>
-              </Switch>
+              <Routes>
+                <Route path="/" element={<WeightForm />}/>
+              </Routes>
             </AuthCheck>
-          </Switch>
+          </Routes>
         </BrowserRouter>
       </Container>
     </React.Fragment>

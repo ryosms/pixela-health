@@ -7,9 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import firebase from 'src/libs/firebase-settings';
+import {auth} from 'src/libs/firebase-settings';
 import 'firebase/auth';
-import {User} from 'firebase';
+import {User} from 'firebase/auth';
 import {useAuthState} from "react-firebase-hooks/auth";
 
 const authStyles = makeStyles((_) => ({
@@ -34,7 +34,7 @@ function AuthButton(props: any) {
 
   const logout = useCallback(() => {
     menuClose();
-    firebase.auth().signOut().catch(err => console.error(err));
+    auth.signOut().catch(err => console.error(err));
   }, []);
 
   if (!user) {
@@ -55,7 +55,7 @@ function AuthButton(props: any) {
 }
 
 function Header() {
-  const [user] = useAuthState(firebase.auth());
+  const [user] = useAuthState(auth);
 
   const classes = makeStyles((_) => ({
     appBar: {
